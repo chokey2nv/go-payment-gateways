@@ -1,4 +1,4 @@
-package paystack
+package client
 
 import (
 	"context"
@@ -30,16 +30,16 @@ func New(secretKey string, opts ...Option) *PayStackClient {
 	return c
 }
 
-func (c *PayStackClient) do(
+func (c *PayStackClient) Do(
 	ctx context.Context,
 	method string,
 	path string,
 	body any,
 	out any,
-) error {
+) (*Meta, error) {
 	reqBody, err := encodeJSON(body)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	req, err := http.NewRequestWithContext(
@@ -49,7 +49,7 @@ func (c *PayStackClient) do(
 		reqBody,
 	)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	req.Header.Set("Authorization", "Bearer "+c.secretKey)
@@ -57,23 +57,23 @@ func (c *PayStackClient) do(
 
 	resp, err := c.http.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	var envelope responseEnvelope
 	if err := json.NewDecoder(resp.Body).Decode(&envelope); err != nil {
-		return err
+		return nil, err
 	}
 
 	if !envelope.Status {
-		return errors.New(envelope.Message)
+		return nil, errors.New(envelope.Message)
 	}
 
 	if out != nil {
 		raw, _ := json.Marshal(envelope.Data)
-		return json.Unmarshal(raw, out)
+		return envelope.Meta, json.Unmarshal(raw, out)
 	}
 
-	return nil
+	return envelope.Meta, nil
 }
