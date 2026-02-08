@@ -20,32 +20,52 @@ func NewTransaction(client *client.PayStackClient) *TransactionService {
 func (c *TransactionService) ExportTransaction(
 	ctx context.Context,
 ) (*models.TransactionExport, error) {
-	var res models.TransactionExport
-	_, err := c.client.Do(ctx, "GET", "/transaction/export", nil, &res)
-	return &res, err
+	res, _, err := client.Do[models.TransactionExport](
+		ctx,
+		c.client,
+		"GET",
+		"/transaction/export",
+		nil,
+	)
+	return res, err
 }
 func (c *TransactionService) TransactionTotals(
 	ctx context.Context,
 ) (*models.TransactionTotals, error) {
-	var res models.TransactionTotals
-	_, err := c.client.Do(ctx, "GET", "/transaction/totals", nil, &res)
-	return &res, err
+	res, _, err := client.Do[models.TransactionTotals](
+		ctx,
+		c.client,
+		"GET",
+		"/transaction/totals",
+		nil,
+	)
+	return res, err
 }
 func (c *TransactionService) ViewTransactionTimeline(
 	ctx context.Context,
 	idOrReference string,
 ) (*models.TransactionTimeline, error) {
-	var res models.TransactionTimeline
-	_, err := c.client.Do(ctx, "GET", "/timeline/"+idOrReference, nil, &res)
-	return &res, err
+	res, _, err := client.Do[models.TransactionTimeline](
+		ctx,
+		c.client,
+		"GET",
+		"/timeline/"+idOrReference,
+		nil,
+	)
+	return res, err
 }
 func (c *TransactionService) InitializeTransaction(
 	ctx context.Context,
 	req models.InitializeTransactionRequest,
 ) (*models.InitializeTransactionResponse, error) {
-	var res models.InitializeTransactionResponse
-	_, err := c.client.Do(ctx, "POST", "/transaction/initialize", req, &res)
-	return &res, err
+	res, _, err := client.Do[models.InitializeTransactionResponse](
+		ctx,
+		c.client,
+		"POST",
+		"/transaction/initialize",
+		req,
+	)
+	return res, err
 }
 
 // -------- Verify Transaction --------
@@ -61,37 +81,40 @@ func (c *TransactionService) VerifyTransaction(
 
 func (c *TransactionService) ListTransactions(
 	ctx context.Context,
-) (*models.ListTransactionsResponse, error) {
-	var data []models.Transaction
-	var meta client.Meta
-
-	_, err := c.client.Do(ctx, "GET", "/transaction", nil, &struct {
-		Data []models.Transaction `json:"data"`
-		Meta client.Meta          `json:"meta"`
-	}{
-		Data: data,
-		Meta: meta,
-	})
-
-	return &models.ListTransactionsResponse{
-		Transactions: data,
-		Meta:         &meta,
-	}, err
+) (*[]*models.Transaction, *client.Meta, error) {
+	res, meta, err := client.Do[[]*models.Transaction](
+		ctx,
+		c.client,
+		"GET",
+		"/transaction",
+		nil,
+	)
+	return res, meta, err
 }
 
 func (c *TransactionService) FetchTransaction(
 	ctx context.Context,
 	id int64,
 ) (*models.Transaction, error) {
-	var res models.Transaction
-	_, err := c.client.Do(ctx, "GET", "/transaction/"+strconv.Itoa(int(id)), nil, &res)
-	return &res, err
+	res, _, err := client.Do[models.Transaction](
+		ctx,
+		c.client,
+		"GET",
+		"/transaction/"+strconv.Itoa(int(id)),
+		nil,
+	)
+	return res, err
 }
 func (c *TransactionService) ChargeAuthorization(
 	ctx context.Context,
 	req models.ChargeAuthorizationRequest,
 ) (*models.Transaction, error) {
-	var res models.Transaction
-	_, err := c.client.Do(ctx, "POST", "/transaction/charge_authorization", req, &res)
-	return &res, err
+	res, _, err := client.Do[models.Transaction](
+		ctx,
+		c.client,
+		"POST",
+		"/transaction/charge_authorization",
+		req,
+	)
+	return res, err
 }
