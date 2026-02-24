@@ -18,7 +18,7 @@ func NewPlanService(client *client.PayStackClient) *PlanService {
 }
 
 // update plan - will return nil when successful
-func (c *PlanService) UpdatePlan(ctx context.Context, idOrCode string, req models.Plan) (*models.Plan, error) {
+func (c *PlanService) UpdatePlan(ctx context.Context, idOrCode string, req *models.Plan) (*models.Plan, error) {
 	res, _, err := client.Do[models.Plan](
 		ctx,
 		c.client,
@@ -28,7 +28,7 @@ func (c *PlanService) UpdatePlan(ctx context.Context, idOrCode string, req model
 	)
 	return res, err
 }
-func (c *PlanService) CreatePlan(ctx context.Context, req models.CreatePlanRequest) (*models.Plan, error) {
+func (c *PlanService) CreatePlan(ctx context.Context, req *models.CreatePlanRequest) (*models.Plan, error) {
 	res, _, err := client.Do[models.Plan](
 		ctx,
 		c.client,

@@ -18,7 +18,7 @@ func NewSubscriptionService(client *client.PayStackClient) *SubscriptionService 
 }
 
 // update plan - will return nil when successful
-func (c *SubscriptionService) UpdateSubscription(ctx context.Context, idOrCode string, req models.Subscription) error {
+func (c *SubscriptionService) UpdateSubscription(ctx context.Context, idOrCode string, req *models.Subscription) error {
 	_, _, err := client.Do[models.Subscription](
 		ctx,
 		c.client,
@@ -28,7 +28,7 @@ func (c *SubscriptionService) UpdateSubscription(ctx context.Context, idOrCode s
 	)
 	return err
 }
-func (c *SubscriptionService) CreateSubscription(ctx context.Context, req models.CreateSubscriptionRequest) (*models.Subscription, error) {
+func (c *SubscriptionService) CreateSubscription(ctx context.Context, req *models.CreateSubscriptionRequest) (*models.Subscription, error) {
 	res, _, err := client.Do[models.Subscription](
 		ctx,
 		c.client,

@@ -56,7 +56,7 @@ func (c *TransactionService) ViewTransactionTimeline(
 }
 func (c *TransactionService) InitializeTransaction(
 	ctx context.Context,
-	req models.InitializeTransactionRequest,
+	req *models.InitializeTransactionRequest,
 ) (*models.InitializeTransactionResponse, error) {
 	res, _, err := client.Do[models.InitializeTransactionResponse](
 		ctx,
@@ -107,7 +107,7 @@ func (c *TransactionService) FetchTransaction(
 }
 func (c *TransactionService) ChargeAuthorization(
 	ctx context.Context,
-	req models.ChargeAuthorizationRequest,
+	req *models.ChargeAuthorizationRequest,
 ) (*models.Transaction, error) {
 	res, _, err := client.Do[models.Transaction](
 		ctx,
