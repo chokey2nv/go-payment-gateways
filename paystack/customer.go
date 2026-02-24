@@ -51,7 +51,7 @@ func (c *CustomerService) FetchCustomer(ctx context.Context, idOrCode string) (*
 }
 
 // update plan - will return nil when successful
-func (c *CustomerService) UpdateCustomer(ctx context.Context, idOrCode string, req models.Customer) (*models.Customer, error) {
+func (c *CustomerService) UpdateCustomer(ctx context.Context, idOrCode string, req *models.Customer) (*models.Customer, error) {
 	res, _, err := client.Do[models.Customer](
 		ctx,
 		c.client,
