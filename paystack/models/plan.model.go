@@ -69,7 +69,7 @@ type Plan struct {
 
 type CreatePlanRequest struct {
 	Name     string       `json:"name"`
-	Amount   string       `json:"amount"` // in kobo
+	Amount   int          `json:"amount"` // in kobo
 	Interval PlanInterval `json:"interval"`
 	Currency string       `json:"currency,omitempty"`
 }
