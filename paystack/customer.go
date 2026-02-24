@@ -17,7 +17,7 @@ func NewCustomerService(client *client.PayStackClient) *CustomerService {
 	}
 }
 
-func (c *CustomerService) CreateCustomer(ctx context.Context, req models.Customer) (*models.Customer, error) {
+func (c *CustomerService) CreateCustomer(ctx context.Context, req *models.Customer) (*models.Customer, error) {
 	res, _, err := client.Do[models.Customer](
 		ctx,
 		c.client,
