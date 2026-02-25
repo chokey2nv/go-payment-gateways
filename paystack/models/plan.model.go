@@ -43,6 +43,7 @@ const (
 	Quarterly  PlanInterval = "quarterly"
 	Biannually PlanInterval = "biannually"
 	Annually   PlanInterval = "annually"
+	Monthly    PlanInterval = "monthly"
 )
 
 type Plan struct {
