@@ -4,7 +4,7 @@ type Customer struct {
 	Authorizations []Authorization `json:"authorizations"`
 	Subscriptions  []Subscription  `json:"subscriptions"`
 	Integration    int             `json:"integration"`
-	Id             string          `json:"id"`
+	Id             int             `json:"id"`
 	FirstName      string          `json:"first_name"`
 	LastName       string          `json:"last_name"`
 	Email          string          `json:"email"`
