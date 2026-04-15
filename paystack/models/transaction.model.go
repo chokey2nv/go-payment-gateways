@@ -2,6 +2,34 @@ package models
 
 import "github.com/chokey2nv/go-payment-gateways/paystack/client"
 
+/**
+{
+  "event": "success",
+  "data": {
+    "reference": "pysqed09wk",
+    "trans": "6037491336",
+    "status": "success",
+    "message": "Approved",
+    "transaction": "6037491336",
+    "trxref": "pysqed09wk",
+    "redirecturl": "?trxref=pysqed09wk&reference=pysqed09wk"
+  }
+}
+*/
+
+type WebTransactionResponse struct {
+	Event string `json:"event"` // "success", "failed"
+	Data  struct {
+		Reference   string `json:"reference"`
+		Trans       string `json:"trans"`
+		Status      string `json:"status"`  // "success", "failed"
+		Message     string `json:"message"` // "Approved", "Declined", "Failed"
+		Transaction string `json:"transaction"`
+		Trxref      string `json:"trxref"`
+		Redirecturl string `json:"redirecturl"` // ?trxref=pysqed09wk&reference=pysqed09wk
+	} `json:"data"`
+}
+
 type TransactionExport struct {
 	Path      string `json:"path"`
 	ExpiresAt string `json:"expiresAt"`
